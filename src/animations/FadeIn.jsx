@@ -1,3 +1,9 @@
+/**
+ * @description 淡入动画组件 - 当元素进入视图时触发淡入效果
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - 需要添加动画的子元素
+ * @param {number} props.duration - 动画持续时间(秒)
+ */
 import { useRef, useEffect } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
 

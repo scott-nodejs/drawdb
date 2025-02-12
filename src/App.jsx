@@ -1,3 +1,7 @@
+/**
+ * @description 应用程序主组件 - 处理路由和主题设置
+ * @component
+ */
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";
 import Editor from "./pages/Editor";
@@ -57,6 +61,11 @@ export default function App() {
   );
 }
 
+/**
+ * @description 主题包装组件 - 处理深色/浅色主题切换
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - 子组件
+ */
 function ThemedPage({ children }) {
   const { setSettings } = useSettings();
 
@@ -80,6 +89,9 @@ function ThemedPage({ children }) {
   return children;
 }
 
+/**
+ * @description 滚动恢复组件 - 在路由变化时将页面滚动到顶部
+ */
 function RestoreScroll() {
   const location = useLocation();
   useLayoutEffect(() => {

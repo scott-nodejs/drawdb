@@ -1,3 +1,7 @@
+/**
+ * @description 区域标签页组件 - 管理所有区域的列表视图
+ * @component
+ */
 import { Button } from "@douyinfe/semi-ui";
 import { IconPlus } from "@douyinfe/semi-icons";
 import Empty from "../Empty";

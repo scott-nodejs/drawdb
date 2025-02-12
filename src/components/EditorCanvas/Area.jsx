@@ -1,3 +1,11 @@
+/**
+ * @description 区域组件 - 可拖拽和调整大小的区域容器
+ * @param {Object} props
+ * @param {Object} props.data - 区域数据对象
+ * @param {Function} props.onPointerDown - 指针按下事件处理函数
+ * @param {Function} props.setResize - 设置调整大小状态的函数
+ * @param {Function} props.setInitCoords - 设置初始坐标的函数
+ */
 import { useRef, useState } from "react";
 import { Button, Popover, Input } from "@douyinfe/semi-ui";
 import { IconEdit, IconDeleteStroked } from "@douyinfe/semi-icons";
@@ -195,6 +203,11 @@ export default function Area({
   );
 }
 
+/**
+ * @description 区域编辑弹出框内容组件
+ * @param {Object} props
+ * @param {Object} props.data - 区域数据对象
+ */
 function EditPopoverContent({ data }) {
   const [editField, setEditField] = useState({});
   const { setSaveState } = useSaveState();

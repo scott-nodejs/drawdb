@@ -1,3 +1,9 @@
+/**
+ * @description 区域详情组件 - 显示和编辑区域的名称和颜色
+ * @param {Object} props
+ * @param {Object} props.data - 区域数据对象
+ * @param {number} props.i - 区域索引
+ */
 import { useState } from "react";
 import { Row, Col, Button, Input, Popover } from "@douyinfe/semi-ui";
 import { IconDeleteStroked } from "@douyinfe/semi-icons";

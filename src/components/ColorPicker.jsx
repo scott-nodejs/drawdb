@@ -1,3 +1,10 @@
+/**
+ * @description 颜色选择器组件 - 提供预设的主题色彩选择
+ * @param {Object} props
+ * @param {string} props.currentColor - 当前选中的颜色值
+ * @param {Function} props.onClearColor - 清除颜色的回调函数
+ * @param {Function} props.onPickColor - 选择颜色的回调函数
+ */
 import { Button } from "@douyinfe/semi-ui";
 import { IconCheckboxTick } from "@douyinfe/semi-icons";
 import { tableThemes } from "../data/constants";

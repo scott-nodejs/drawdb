@@ -3,6 +3,7 @@ import ControlPanel from "./EditorHeader/ControlPanel";
 import Canvas from "./EditorCanvas/Canvas";
 import { CanvasContextProvider } from "../context/CanvasContext";
 import SidePanel from "./EditorSidePanel/SidePanel";
+import RightPanel from "./EditorRightPanel";
 import { DB, State } from "../data/constants";
 import { db } from "../data/db";
 import {
@@ -427,8 +428,6 @@ export default function WorkSpace() {
         onPointerLeave={(e) => e.isPrimary && setResize(false)}
         onPointerMove={(e) => e.isPrimary && handleResize(e)}
         onPointerDown={(e) => {
-          // Required for onPointerLeave to trigger when a touch pointer leaves
-          // https://stackoverflow.com/a/70976017/1137077
           e.target.releasePointerCapture(e.pointerId);
         }}
         style={isRtl(i18n.language) ? { direction: "rtl" } : {}}
@@ -446,6 +445,7 @@ export default function WorkSpace() {
             </div>
           )}
         </div>
+        {layout.sidebar && <RightPanel width={width} />}
       </div>
       <Modal
         centered

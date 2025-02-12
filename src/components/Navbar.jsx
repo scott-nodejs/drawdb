@@ -23,49 +23,23 @@ export default function Navbar() {
                   .scrollIntoView({ behavior: "smooth" })
               }
             >
-              Features
+              首页
             </Link>
             <Link
               to="/editor"
               className="text-lg font-semibold hover:text-sky-800 transition-colors duration-300"
             >
-              Editor
+              编辑器
             </Link>
             <Link
               to="/templates"
               className="text-lg font-semibold hover:text-sky-800 transition-colors duration-300"
             >
-              Templates
+              模板
             </Link>
           </div>
           <div className="md:hidden block space-x-3 ms-12">
-            <a
-              title="Jump to Github"
-              className="px-2 py-2 hover:opacity-60 transition-all duration-300 rounded-full text-2xl"
-              href="https://github.com/drawdb-io/drawdb"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="opacity-70 bi bi-github" />
-            </a>
-            <a
-              title="Follow us on X"
-              className="px-2 py-2 hover:opacity-60 transition-all duration-300 rounded-full text-2xl"
-              href="https://x.com/drawDB_"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="opacity-70 bi bi-twitter-x" />
-            </a>
-            <a
-              title="Join the community on Discord"
-              className="px-2 py-2 hover:opacity-60 transition-all duration-300 rounded-full text-2xl"
-              href="https://discord.gg/BrjZgNrmR6"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <i className="opacity-70 bi bi-discord" />
-            </a>
+            
           </div>
         </div>
         <button
