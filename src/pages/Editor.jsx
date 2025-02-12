@@ -10,6 +10,7 @@ import TasksContextProvider from "../context/TasksContext";
 import SaveStateContextProvider from "../context/SaveStateContext";
 import EnumsContextProvider from "../context/EnumsContext";
 import WorkSpace from "../components/Workspace";
+import RightPanel from "../components/EditorRightPanel/RightPanel";
 
 export default function Editor() {
   return (

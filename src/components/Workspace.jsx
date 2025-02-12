@@ -3,7 +3,7 @@ import ControlPanel from "./EditorHeader/ControlPanel";
 import Canvas from "./EditorCanvas/Canvas";
 import { CanvasContextProvider } from "../context/CanvasContext";
 import SidePanel from "./EditorSidePanel/SidePanel";
-import RightPanel from "./EditorRightPanel";
+import RightPanel from "./EditorRightPanel/RightPanel";
 import { DB, State } from "../data/constants";
 import { db } from "../data/db";
 import {
@@ -27,9 +27,10 @@ import { isRtl } from "../i18n/utils/rtl";
 import { useSearchParams } from "react-router-dom";
 import { octokit } from "../data/octokit";
 
+
 export const IdContext = createContext({ gistId: "" });
 
-export default function WorkSpace() {
+export default function Workspace() {
   const [id, setId] = useState(0);
   const [gistId, setGistId] = useState("");
   const [loadedFromGistId, setLoadedFromGistId] = useState("");

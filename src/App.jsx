@@ -16,48 +16,48 @@ import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
-    <SettingsContextProvider>
-      <BrowserRouter>
-        <RestoreScroll />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/editor"
-            element={
-              <ThemedPage>
-                <Editor />
-              </ThemedPage>
-            }
-          />
-          <Route
-            path="/survey"
-            element={
-              <ThemedPage>
-                <Survey />
-              </ThemedPage>
-            }
-          />
-          <Route
-            path="/shortcuts"
-            element={
-              <ThemedPage>
-                <Shortcuts />
-              </ThemedPage>
-            }
-          />
-          <Route
-            path="/bug-report"
-            element={
-              <ThemedPage>
-                <BugReport />
-              </ThemedPage>
-            }
-          />
-          <Route path="/templates" element={<Templates />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </SettingsContextProvider>
+      <SettingsContextProvider>
+        <BrowserRouter>
+          <RestoreScroll />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/editor"
+              element={
+                <ThemedPage>
+                  <Editor />
+                </ThemedPage>
+              }
+            />
+            <Route
+              path="/survey"
+              element={
+                <ThemedPage>
+                  <Survey />
+                </ThemedPage>
+              }
+            />
+            <Route
+              path="/shortcuts"
+              element={
+                <ThemedPage>
+                  <Shortcuts />
+                </ThemedPage>
+              }
+            />
+            <Route
+              path="/bug-report"
+              element={
+                <ThemedPage>
+                  <BugReport />
+                </ThemedPage>
+              }
+            />
+            <Route path="/templates" element={<Templates />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </SettingsContextProvider>
   );
 }
 
