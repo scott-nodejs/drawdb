@@ -1391,25 +1391,21 @@ export default function ControlPanel({
     <>
       <div>
         {layout.header && (
-          <div
-            className="flex justify-between items-center me-7"
-            style={isRtl(i18n.language) ? { direction: "rtl" } : {}}
-          >
-            {header()}
-            {window.name.split(" ")[0] !== "t" && (
-              <Button
-                type="primary"
-                className="text-base me-2 pe-6 ps-5 py-[18px] rounded-md"
-                size="default"
-                icon={<IconShareStroked />}
-                onClick={() => setModal(MODAL.SHARE)}
-              >
-                {t("share")}
-              </Button>
-            )}
+          <div className="border-b border-color">
+            <div className="bg-[var(--semi-color-bg-1)]">
+              <div className="flex justify-between items-center">
+                <div className="flex-1">
+                  {header()}
+                </div>
+                {layout.toolbar && (
+                  <div className="flex items-center">
+                    {toolbar()}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         )}
-        {layout.toolbar && toolbar()}
       </div>
       <Modal
         modal={modal}
@@ -1625,11 +1621,11 @@ export default function ControlPanel({
 
   function header() {
     return (
-      <nav
-        className="flex justify-between pt-1 items-center whitespace-nowrap"
+      <nav 
+        className="flex justify-between items-center py-1 whitespace-nowrap"
         style={isRtl(i18n.language) ? { direction: "rtl" } : {}}
       >
-        <div className="flex justify-start items-center">
+        <div className="flex items-center">
           <Link to="/">
             <img
               width={54}
@@ -1638,153 +1634,145 @@ export default function ControlPanel({
               className="ms-7 min-w-[54px]"
             />
           </Link>
-          <div className="ms-1 mt-1">
-            <div className="flex items-center ms-3 gap-2">
-              {databases[database].image && (
-                <img
-                  src={databases[database].image}
-                  className="h-5"
-                  style={{
-                    filter:
-                      "opacity(0.4) drop-shadow(0 0 0 white) drop-shadow(0 0 0 white)",
-                  }}
-                  alt={databases[database].name + " icon"}
-                  title={databases[database].name + " diagram"}
-                />
-              )}
-              <div
-                className="text-xl  me-1"
-                onPointerEnter={(e) => e.isPrimary && setShowEditName(true)}
-                onPointerLeave={(e) => e.isPrimary && setShowEditName(false)}
-                onPointerDown={(e) => {
-                  // Required for onPointerLeave to trigger when a touch pointer leaves
-                  // https://stackoverflow.com/a/70976017/1137077
-                  e.target.releasePointerCapture(e.pointerId);
+          <div className="flex items-center ms-3 gap-2">
+            {databases[database].image && (
+              <img
+                src={databases[database].image}
+                className="h-5"
+                style={{
+                  filter: "opacity(0.4) drop-shadow(0 0 0 white) drop-shadow(0 0 0 white)",
                 }}
-                onClick={() => setModal(MODAL.RENAME)}
-              >
-                {window.name.split(" ")[0] === "t" ? "Templates/" : "Diagrams/"}
-                {title}
-              </div>
-              {(showEditName || modal === MODAL.RENAME) && <IconEdit />}
+                alt={databases[database].name + " icon"}
+                title={databases[database].name + " diagram"}
+              />
+            )}
+            <div
+              className="text-xl me-1"
+              onPointerEnter={(e) => e.isPrimary && setShowEditName(true)}
+              onPointerLeave={(e) => e.isPrimary && setShowEditName(false)}
+              onPointerDown={(e) => e.target.releasePointerCapture(e.pointerId)}
+              onClick={() => setModal(MODAL.RENAME)}
+            >
+              {window.name.split(" ")[0] === "t" ? "Templates/" : "Diagrams/"}
+              {title}
             </div>
-            <div className="flex justify-between items-center">
-              <div className="flex justify-start text-md select-none me-2">
-                {Object.keys(menu).map((category) => (
-                  <Dropdown
-                    key={category}
-                    position="bottomLeft"
-                    style={{
-                      width: "240px",
-                      direction: isRtl(i18n.language) ? "rtl" : "ltr",
-                    }}
-                    render={
-                      <Dropdown.Menu>
-                        {Object.keys(menu[category]).map((item, index) => {
-                          if (menu[category][item].children) {
-                            return (
-                              <Dropdown
-                                style={{ width: "120px" }}
-                                key={item}
-                                position="rightTop"
-                                render={
-                                  <Dropdown.Menu>
-                                    {menu[category][item].children.map(
-                                      (e, i) => (
-                                        <Dropdown.Item
-                                          key={i}
-                                          onClick={Object.values(e)[0]}
-                                        >
-                                          {t(Object.keys(e)[0])}
-                                        </Dropdown.Item>
-                                      ),
-                                    )}
-                                  </Dropdown.Menu>
-                                }
-                              >
-                                <Dropdown.Item
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                  }}
-                                  onClick={menu[category][item].function}
-                                >
-                                  {t(item)}
-
-                                  {isRtl(i18n.language) ? (
-                                    <IconChevronLeft />
-                                  ) : (
-                                    <IconChevronRight />
-                                  )}
-                                </Dropdown.Item>
-                              </Dropdown>
-                            );
-                          }
-                          if (menu[category][item].warning) {
-                            return (
-                              <Popconfirm
-                                key={index}
-                                title={menu[category][item].warning.title}
-                                content={menu[category][item].warning.message}
-                                onConfirm={menu[category][item].function}
-                                position="right"
-                                okText={t("confirm")}
-                                cancelText={t("cancel")}
-                              >
-                                <Dropdown.Item>{t(item)}</Dropdown.Item>
-                              </Popconfirm>
-                            );
-                          }
-                          return (
+            {(showEditName || modal === MODAL.RENAME) && <IconEdit />}
+          </div>
+          <div className="flex items-center ms-4">
+            {Object.keys(menu).map((category) => (
+              <Dropdown
+                key={category}
+                position="bottomLeft"
+                style={{
+                  width: "240px",
+                  direction: isRtl(i18n.language) ? "rtl" : "ltr",
+                }}
+                render={
+                  <Dropdown.Menu>
+                    {Object.keys(menu[category]).map((item, index) => {
+                      if (menu[category][item].children) {
+                        return (
+                          <Dropdown
+                            style={{ width: "120px" }}
+                            key={item}
+                            position="rightTop"
+                            render={
+                              <Dropdown.Menu>
+                                {menu[category][item].children.map(
+                                  (e, i) => (
+                                    <Dropdown.Item
+                                      key={i}
+                                      onClick={Object.values(e)[0]}
+                                    >
+                                      {t(Object.keys(e)[0])}
+                                    </Dropdown.Item>
+                                  ),
+                                )}
+                              </Dropdown.Menu>
+                            }
+                          >
                             <Dropdown.Item
-                              key={index}
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
                               onClick={menu[category][item].function}
-                              style={
-                                menu[category][item].shortcut && {
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                }
-                              }
                             >
-                              <div className="w-full flex items-center justify-between">
-                                <div>{t(item)}</div>
-                                <div className="flex items-center gap-1">
-                                  {menu[category][item].shortcut && (
-                                    <div className="text-gray-400">
-                                      {menu[category][item].shortcut}
-                                    </div>
-                                  )}
-                                  {menu[category][item].state &&
-                                    menu[category][item].state}
-                                </div>
-                              </div>
+                              {t(item)}
+                              {isRtl(i18n.language) ? (
+                                <IconChevronLeft />
+                              ) : (
+                                <IconChevronRight />
+                              )}
                             </Dropdown.Item>
-                          );
-                        })}
-                      </Dropdown.Menu>
-                    }
-                  >
-                    <div className="px-3 py-1 hover-2 rounded">
-                      {t(category)}
-                    </div>
-                  </Dropdown>
-                ))}
-              </div>
-              <Button
-                size="small"
-                type="tertiary"
-                icon={
-                  saveState === State.LOADING || saveState === State.SAVING ? (
-                    <Spin size="small" />
-                  ) : null
+                          </Dropdown>
+                        );
+                      }
+                      if (menu[category][item].warning) {
+                        return (
+                          <Popconfirm
+                            key={index}
+                            title={menu[category][item].warning.title}
+                            content={menu[category][item].warning.message}
+                            onConfirm={menu[category][item].function}
+                            position="right"
+                            okText={t("confirm")}
+                            cancelText={t("cancel")}
+                          >
+                            <Dropdown.Item>{t(item)}</Dropdown.Item>
+                          </Popconfirm>
+                        );
+                      }
+                      return (
+                        <Dropdown.Item
+                          key={index}
+                          onClick={menu[category][item].function}
+                          style={
+                            menu[category][item].shortcut && {
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }
+                          }
+                        >
+                          <div className="w-full flex items-center justify-between">
+                            <div>{t(item)}</div>
+                            <div className="flex items-center gap-1">
+                              {menu[category][item].shortcut && (
+                                <div className="text-gray-400">
+                                  {menu[category][item].shortcut}
+                                </div>
+                              )}
+                              {menu[category][item].state &&
+                                menu[category][item].state}
+                            </div>
+                          </div>
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown.Menu>
                 }
               >
-                {getState()}
-              </Button>
-            </div>
+                <div className="px-3 py-1 hover-2 rounded">
+                  {t(category)}
+                </div>
+              </Dropdown>
+            ))}
           </div>
+        </div>
+        <div className="flex items-center gap-3 me-7">
+          <Button
+            size="small"
+            type="tertiary"
+            icon={
+              saveState === State.LOADING || saveState === State.SAVING ? (
+                <Spin size="small" />
+              ) : null
+            }
+          >
+            {getState()}
+          </Button>
         </div>
       </nav>
     );

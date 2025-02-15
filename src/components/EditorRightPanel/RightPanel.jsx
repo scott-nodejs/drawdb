@@ -20,7 +20,7 @@ import {
   useEnums,
   useSettings
 } from '../../hooks';
-import { generateSQL, parseAPIResponse } from '../../services/api';
+import { generateSQL, parseAPIResponse, generateSQLStream } from '../../services/api';
 
 export default function RightPanel() {
   const { t } = useTranslation();
@@ -114,43 +114,28 @@ export default function RightPanel() {
     
     setIsLoading(true);
     try {
+      console.log('Sending message:', inputValue);
+      
       // 添加用户消息
       aiAssistantRef.current?.addMessage({
         role: 'user',
         content: inputValue
       });
 
-      // 调用 API 服务，传入当前的 sessionId
-      const data = await generateSQL(inputValue, currentSessionId);
-      
-      try {
-        // 解析返回数据
-        const { content, jsonData } = parseAPIResponse(data);
-        
-        // 更新 sessionId
-        if (data.sessionId) {
-          setCurrentSessionId(data.sessionId);
-        }
-        
-        // 添加AI回复
-        aiAssistantRef.current?.addMessage({
-          role: 'assistant',
-          content: content,
-          jsonData: jsonData
-        });
-      } catch (parseError) {
-        console.error('Parse error:', parseError);
-        // 如果解析失败，直接显示原始文本
-        aiAssistantRef.current?.addMessage({
-          role: 'assistant',
-          content: `解析失败: ${parseError.message}\n\n原始数据:\n${data.output.text}`
-        });
-      }
+      // 调用流式 API
+      await generateSQLStream(inputValue, currentSessionId, (text) => {
+        // 直接显示文本
+        console.log('Received stream text:', text);
+        console.log('AIAssistant ref:', aiAssistantRef.current);
+        aiAssistantRef.current?.addStreamMessage(text);
+      });
 
+      console.log('Stream completed, finishing message');
+      // 流式输出完成后，结束消息
+      aiAssistantRef.current?.finishStreamMessage();
       setInputValue("");
     } catch (error) {
       console.error('Error:', error);
-      // 添加错误消息
       aiAssistantRef.current?.addMessage({
         role: 'assistant',
         content: `发生错误: ${error.message}`
